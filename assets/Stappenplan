@@ -1,0 +1,20 @@
+
+maak een test bestand aan
+
+1 {
+- Maak een const aan die de route weergeeft in Html (DOM tree)
+- Maak een nieuwe p aan voor de warning message
+
+}
+
+1a {
+- Maak een functie die bekijkt hoeveel tv's er nog verkocht moeten worden
+- Wat is het totaal aantal tv's
+- Reken uit wat het doel is (Moeten verkopen) en hoeveel tv's dit zijn
+- Doe dit totaal min het doel zodat je weet hoeveel tv's er verkocht moeten worden
+- zorg dat er een warning message komt.
+}
+
+1b {
+- kleur de message rood
+}
