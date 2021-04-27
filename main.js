@@ -1,4 +1,5 @@
 // VOORRAAD ARRAY MET TV'S
+
 const inventory = [
   {
     type: '43PUS6504/12',
@@ -161,3 +162,116 @@ const inventory = [
     sold: 8,
   },
 ];
+
+const sortByPrice = inventory.sort((a, b) => a.price - b.price );
+
+const ambiTvs = inventory.filter((stock)=>{
+  const ambi = stock.options.ambiLight;
+  if (ambi) return true;
+  return false
+})
+
+function hasTvAmbi (ambi) {
+  if (ambiTvs)return ambi;
+}
+
+const soldOutTv = inventory.filter((tv)=>{
+  const soldOutTvArray = tv.sold === tv.originalStock;
+  if (soldOutTvArray) return true;
+})
+
+function soldOutTvObject (soldOutTvOne) {
+  if (soldOutTv) return soldOutTvOne;
+}
+
+const tvNamesAndTypes = inventory.map((stock)=>{
+   let tvName = stock.name;
+   let tvType = stock.type;
+   return "Tv name: " + tvName + " | " + "Tv type: " + tvType;
+});
+
+const remainingTv = inventory.map((stock)=>{
+  return stock.originalStock - stock.sold;
+});
+
+function availableForSale (array) {
+  let total = 0;
+  array.map((item)=>{
+    total = total + item;
+  })
+  return total;
+}
+
+const tvType = inventory.map((stock)=>{
+  return stock.type;
+});
+
+const tvWorth = inventory.map((stock)=>{
+  return stock.originalStock * stock.price;
+});
+
+function allTvWorth (array){
+  let total = 0;
+  array.map((item)=>{
+    total += item;
+  });
+  return total;
+};
+
+const howManyTvSoldPrice = inventory.map((stock)=>{
+  return stock.sold * stock.price;
+});
+
+function totalAmountOfSoldTv (array) {
+  let total = 0;
+  array.map((item)=>{
+    total += item;
+  });
+  return total;
+}
+
+function tvDetailNameAndType (array, indexNumber) {
+  return array[indexNumber].brand + " " + array[indexNumber].type + " - " + array[indexNumber].name
+}
+
+function changePriceWithChar (array, indexNumber) {
+  return "€" + array[indexNumber].price + ",-";
+}
+
+function inchToCm (inch){
+  return inch * 2.54;
+}
+
+function tvSizes (array, indexNumber, inch){
+  const cm = array[indexNumber].availableSizes
+
+}
+//function inchToCm (array)
+
+const container = document.getElementById('warning');
+container.textContent = availableForSale(remainingTv);
+const containerTwo = document.getElementById('totalAmount');
+containerTwo.textContent = allTvWorth(tvWorth);
+const containerThree = document.getElementById('totalSold');
+containerThree.textContent = totalAmountOfSoldTv(howManyTvSoldPrice);
+const containerFour = document.getElementById('tvOne');
+containerFour.textContent = inventory[0].name + inventory[0].type;
+const containerFive = document.getElementById('tvTwo');
+containerFive.textContent = inventory[1].name + inventory[0].type;
+const containerSix = document.getElementById('tvThree');
+containerSix.textContent = tvDetailNameAndType(inventory, 0);
+const containerSeven = document.getElementById('tvFour');
+containerSeven.textContent = tvDetailNameAndType(inventory, 1);
+const containerEight = document.getElementById('tvThreePrice');
+containerEight.textContent = changePriceWithChar(inventory, 0);
+const containerNine = document.getElementById('tvFourPrice');
+containerNine.textContent = changePriceWithChar(inventory, 1);
+
+console.log(availableForSale(remainingTv));
+console.log(remainingTv);
+console.log(tvNamesAndTypes);
+console.log(soldOutTv);
+console.log(ambiTvs);
+console.log(sortByPrice);
+console.log("De totale waarde van de verkochte tv's: €" + allTvWorth(tvWorth));
+
