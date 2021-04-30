@@ -163,53 +163,63 @@ const inventory = [
   },
 ];
 
-const sortByPrice = inventory.sort((a, b) => a.price - b.price );
+//1a hoeveel tv's
+const remainingTv = inventory.map((stock)=>{
+  return stock.originalStock - stock.sold;
+});
 
-const ambiTvs = inventory.filter((stock)=>{
-  const ambi = stock.options.ambiLight;
-  if (ambi) return true;
-  return false
-})
-
-function hasTvAmbi (ambi) {
-  if (ambiTvs)return ambi;
+//1a hoeveel tv's
+function availableForSale (array) {
+  let total = 0;
+  array.map((item) => {
+    total += item;
+  })
+  return total;
 }
 
+//2a tv type en naam
+const tvNamesAndTypes = inventory.map((stock)=>{
+  let tvName = stock.name;
+  let tvType = stock.type;
+  return "Tv name: " + tvName + " | " + "Tv type: " + tvType;
+});
+
+//2a tv type en naam
+const tvType = inventory.map((stock)=>{
+  return stock.type;
+});
+
+//2b Verkochte tv's
 const soldOutTv = inventory.filter((tv)=>{
   const soldOutTvArray = tv.sold === tv.originalStock;
   if (soldOutTvArray) return true;
 })
 
+//2b verkochte tv's
 function soldOutTvObject (soldOutTvOne) {
   if (soldOutTv) return soldOutTvOne;
 }
 
-const tvNamesAndTypes = inventory.map((stock)=>{
-   let tvName = stock.name;
-   let tvType = stock.type;
-   return "Tv name: " + tvName + " | " + "Tv type: " + tvType;
-});
+//2c Ambilight tv's
+const ambiTvs = inventory.filter((stock)=>{
+  const ambi = stock.options.ambiLight;
+  if (ambi) return true;
+})
 
-const remainingTv = inventory.map((stock)=>{
-  return stock.originalStock - stock.sold;
-});
-
-function availableForSale (array) {
-  let total = 0;
-  array.map((item)=>{
-    total = total + item;
-  })
-  return total;
+//2c Ambilight tv's
+function hasTvAmbi (ambi) {
+  if (ambiTvs)return ambi;
 }
 
-const tvType = inventory.map((stock)=>{
-  return stock.type;
-});
+//2d van hoog naar laag
+const sortByPrice = inventory.sort((a, b) => a.price - b.price );
 
+//3a Totale opbrengst
 const tvWorth = inventory.map((stock)=>{
   return stock.originalStock * stock.price;
 });
 
+//3a Totale opbrengst
 function allTvWorth (array){
   let total = 0;
   array.map((item)=>{
@@ -218,10 +228,12 @@ function allTvWorth (array){
   return total;
 };
 
+//3b Totaal verdiend
 const howManyTvSoldPrice = inventory.map((stock)=>{
   return stock.sold * stock.price;
 });
 
+//3b Totaal verdiend
 function totalAmountOfSoldTv (array) {
   let total = 0;
   array.map((item)=>{
@@ -230,23 +242,25 @@ function totalAmountOfSoldTv (array) {
   return total;
 }
 
+//5a Functie voor de weegave van 2 tv types
 function tvDetailNameAndType (array, indexNumber) {
   return array[indexNumber].brand + " " + array[indexNumber].type + " - " + array[indexNumber].name
 }
 
+//5b Euro teken en ,- bij de prijs zetten
 function changePriceWithChar (array, indexNumber) {
   return "€" + array[indexNumber].price + ",-";
 }
 
-function inchToCm (inch){
-  return inch * 2.54;
+//5c van inch naar cm
+
+function inchToCm (array) {
+  const availableSizes = array.availableSizes.map((sizes) => {
+    return "inch: " + sizes + " cm: " + (sizes * 2.5);
+  })
+  return availableSizes.join(" | ")
 }
 
-function tvSizes (array, indexNumber, inch){
-  const cm = array[indexNumber].availableSizes
-
-}
-//function inchToCm (array)
 
 const container = document.getElementById('warning');
 container.textContent = availableForSale(remainingTv);
@@ -266,6 +280,10 @@ const containerEight = document.getElementById('tvThreePrice');
 containerEight.textContent = changePriceWithChar(inventory, 0);
 const containerNine = document.getElementById('tvFourPrice');
 containerNine.textContent = changePriceWithChar(inventory, 1);
+const containerTen = document.getElementById('inchTvThree');
+containerTen.textContent = inchToCm(inventory[0])
+const containerEleven = document.getElementById('inchTvFour');
+containerEleven.textContent = inchToCm(inventory[1])
 
 console.log(availableForSale(remainingTv));
 console.log(remainingTv);
@@ -274,4 +292,5 @@ console.log(soldOutTv);
 console.log(ambiTvs);
 console.log(sortByPrice);
 console.log("De totale waarde van de verkochte tv's: €" + allTvWorth(tvWorth));
+
 
